@@ -33,6 +33,23 @@ class DefinitionHandler(tornado.web.RequestHandler):
 
         self.write_response(definition)
 
+    def patch(self):
+        word = self.get_argument('word')
+        definition = json.loads(self.request.body.decode('utf-8'))
+
+        self.adapter.update(word, definition)
+
+        definition = self.adapter.find(word)
+        self.write_response(definition)
+
+    def put(self):
+        word = self.get_argument('word')
+        definition = json.loads(self.request.body.decode('utf-8'))
+
+        self.adapter.replace(word, definition)
+
+        self.write_response(definition)
+
     def delete(self):
         word = self.get_argument('word')
         self.adapter.delete(word)

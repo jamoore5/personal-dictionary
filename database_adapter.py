@@ -33,3 +33,10 @@ class DatabaseAdapter:
 
     def find_all(self):
         return list(self.defintion_collection.find(None, {'_id': False}))
+
+    def replace(self, word, definition):
+        self.defintion_collection.replace_one({"word": word}, definition)
+
+    def update(self, word, definition):
+        update_doc = {"$set": definition}
+        self.defintion_collection.update_one({"word": word}, update_doc)
