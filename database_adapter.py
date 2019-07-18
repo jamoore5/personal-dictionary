@@ -3,11 +3,11 @@ import pymongo.errors
 
 import os
 
-class DuplicateKeyError(Exception):
+class DuplicateError(Exception):
     pass
 
 
-class MongoAdapter:
+class DatabaseAdapter:
     def __init__(self):
         url = os.environ.get('MONGODB_URL')
         client = MongoClient(url)
@@ -21,7 +21,7 @@ class MongoAdapter:
         try:
             self.defintion_collection.insert_one(definition)
         except pymongo.errors.DuplicateKeyError:
-            raise DuplicateKeyError
+            raise DuplicateError
         finally:
             del definition['_id']
 

@@ -1,12 +1,12 @@
 import tornado.web
 import json
 
-from mongo_adapter import MongoAdapter, DuplicateKeyError
+from database_adapter import DatabaseAdapter, DuplicateError
 
 
 class DefinitionHandler(tornado.web.RequestHandler):
     def initialize(self):
-        self.adapter = MongoAdapter()
+        self.adapter = DatabaseAdapter()
         self.adapter.create_unique_word_index()
 
     def write_response(self, response):
@@ -28,7 +28,7 @@ class DefinitionHandler(tornado.web.RequestHandler):
         definition = json.loads(self.request.body.decode('utf-8'))
         try:
             self.adapter.insert(definition)
-        except DuplicateKeyError:
+        except DuplicateError:
             self.set_status(303)
 
         self.write_response(definition)
