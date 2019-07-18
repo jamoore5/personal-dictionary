@@ -1,0 +1,38 @@
+<html>
+   <head>
+      <title>Personal Dictionary</title>
+   </head>
+   <body>
+     <h1>Personal Dictionary</h1>
+     <div class="definition">
+       {% for definition in definitions %}
+         <h1>{{ escape(definition['word']) }}</h1>
+         <h4>{{ escape(definition['pronunciation']) }}</h4>
+         <p>{{ escape(definition['definition']) }}</p>
+         <div><button id="edit" value="{{definition['word']}}">Edit</button><button id="delete" value="{{definition['word']}}">Delete</button></div>
+       {% end %}
+     </div>
+   </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $("button#edit").click(function( e ) {
+            e.preventDefault();
+
+            var word = $(this).attr("value");
+            window.location.href = "http://localhost:8888/definition?word=" + word;
+        });
+
+        $("button#delete").click(function( e ) {
+            e.preventDefault();
+var word = $(this).attr("value");
+
+            $.ajax({
+                url: "api/definition?word="+word,
+                type: 'DELETE'
+            }).done(function() {
+                window.location.href = "http://localhost:8888/";
+            });
+        });
+    </script>
+ </html>

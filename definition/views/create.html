@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Personal Dictionary</title>
+    </head>
+    <body>
+        <form class="definition">
+            <div> Word: <input type="text" name="word"/></div>
+            <div> Pronunciation: <input type="text" name="pronunciation"/></div>
+            <div> Definition: <input type="text" name="definition"/></div>
+            <div> Seen In: <input type="text" name="source"/></div>
+            <div><input type="submit" value="Create"/></div>
+        </form>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $("form.definition").submit(function( e ) {
+            e.preventDefault();
+
+            function jsonFormData() {
+                var data = $("form.definition").serializeArray();
+                var formData = _.object(_.pluck(data, 'name'), _.pluck(data, 'value'));
+                // console.log(formData)
+                return formData
+            };
+
+            $.ajax({
+                url: "api/definition",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify( jsonFormData() )
+            }).done(function() {
+                window.location.href = "http://localhost:8888/";
+            });
+        });
+    </script>
+ </html>
+
+
+

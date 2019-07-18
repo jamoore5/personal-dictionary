@@ -4,7 +4,7 @@ import json
 from database_adapter import DatabaseAdapter, DuplicateError
 
 
-class DefinitionHandler(tornado.web.RequestHandler):
+class ApiHandler(tornado.web.RequestHandler):
     def initialize(self):
         self.adapter = DatabaseAdapter()
         self.adapter.create_unique_word_index()

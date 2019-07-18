@@ -1,12 +1,17 @@
 import tornado.ioloop
 import tornado.web
 
-from definition_handler import DefinitionHandler
+from definition.handlers.api_handler import ApiHandler
+from definition.handlers.frontend_handlers import CreateHandler, IndexHandler, EditHandler
 
 
 def make_app():
     return tornado.web.Application([
-        (r"/definition", DefinitionHandler)
+        (r"/api/definition", ApiHandler),
+        (r"/definition/create", CreateHandler),
+        (r"/definition", EditHandler),
+        (r"/", IndexHandler)
+
     ], debug=True)
 
 

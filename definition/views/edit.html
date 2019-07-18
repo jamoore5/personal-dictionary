@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Personal Dictionary</title>
+    </head>
+    <body>
+        <form class="definition">
+            <div> Word: <input type="text" name="word" value="{{definition['word']}}"/></div>
+            <div> Pronunciation: <input type="text" name="pronunciation" value="{{definition['pronunciation']}}"/></div>
+            <div> Definition: <input type="text" name="definition" value="{{definition['definition']}}"/></div>
+            <div> Seen In: <input type="text" name="source" value="{{definition['source']}}"/></div>
+            <div><input type="submit" value="Edit"/> <button type="delete" value="{{definition['word']}}">Delete</button></div>
+        </form>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $("form.definition").submit(function( e ) {
+            e.preventDefault();
+
+            function jsonFormData() {
+                var data = $("form.definition").serializeArray();
+                var formData = _.object(_.pluck(data, 'name'), _.pluck(data, 'value'));
+                // console.log(formData)
+                return formData
+            };
+
+            $.ajax({
+                url: "api/definition",
+                type: 'PATCH',
+                contentType: 'application/json',
+                data: JSON.stringify( jsonFormData() )
+            }).done(function() {
+                window.location.href = "http://localhost:8888/";
+            });
+        });
+
+        $("button").click(function( e ) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "api/definition?word={{definition['word']}}",
+                type: 'DELETE'
+            }).done(function() {
+                window.location.href = "http://localhost:8888/";
+            });
+        });
+    </script>
+ </html>
+
+
+

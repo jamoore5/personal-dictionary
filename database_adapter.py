@@ -3,6 +3,7 @@ import pymongo.errors
 
 import os
 
+
 class DuplicateError(Exception):
     pass
 
