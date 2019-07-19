@@ -18,6 +18,7 @@ class EditHandler(tornado.web.RequestHandler):
 
 class IndexHandler(tornado.web.RequestHandler):
     async def get(self):
+        show_links = self.get_argument('show_links', False)
         adapter = ApiAdapter()
         definitions = await adapter.fetch("api/definition")
-        self.render("../views/index.html", definitions=definitions)
+        self.render("../views/index.html", definitions=definitions, show_links=show_links)

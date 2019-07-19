@@ -1,32 +1,52 @@
 <html>
     <head>
         <title>Personal Dictionary</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <form class="definition">
-            <div> Word: <input type="text" name="word" value="{{definition['word']}}"/></div>
-            <div> Pronunciation: <input type="text" name="pronunciation" value="{{definition['pronunciation']}}"/></div>
-            <div> Definition: <input type="text" name="definition" value="{{definition['definition']}}"/></div>
-            <div> Seen In: <input type="text" name="source" value="{{definition['source']}}"/></div>
-            <div><input type="submit" value="Edit"/> <button type="delete" value="{{definition['word']}}">Delete</button></div>
-        </form>
+        <div class="wrapper container" style="margin-top:2em;">
+            <form class="definition">
+                <div class="form-group">
+                    <label for="InputWord">Word</label>
+                    <input name="word" class="form-control" id="InputWord" value="{{definition.get('word', '')}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="InputPronunciation">Pronunciation</label>
+                    <input name="pronunciation" class="form-control" id="InputPronunciation"  value="{{definition.get('pronunciation', '')}}" placeholder="Enter the pronunciation">
+                </div>
+                <div class="form-group">
+                    <label for="InputDefinition">Definition</label>
+                    <input name="definition" class="form-control" id="InputDefinition"  value="{{definition.get('definition', '')}}" placeholder="Enter the definition">
+                </div>
+                <div class="form-group">
+                    <label for="InputSource">Discovered In</label>
+                    <input name="source" class="form-control" id="InputSource"  value="{{definition.get('source', '')}}"  placeholder="Enter where you found this word">
+                </div>
+                <div class="form-group">
+                    <label for="InputExample">Example</label>
+                    <input name="example" class="form-control" id="InputExample"  value="{{definition.get('example', '')}}"  placeholder="Enter an example sentence">
+                </div>
+                <button id="submit" class="btn btn-primary">Submit</button>
+                <button id="delete" class="btn btn-primary">Delete</button>
+            </form>
+        </div>
     </body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $("form.definition").submit(function( e ) {
+        $("button#submit").click(function( e ) {
             e.preventDefault();
 
             function jsonFormData() {
                 var data = $("form.definition").serializeArray();
                 var formData = _.object(_.pluck(data, 'name'), _.pluck(data, 'value'));
-                // console.log(formData)
+                console.log(formData)
                 return formData
             };
 
             $.ajax({
-                url: "api/definition",
+                url: "api/definition?word={{definition['word']}}",
                 type: 'PATCH',
                 contentType: 'application/json',
                 data: JSON.stringify( jsonFormData() )
@@ -35,7 +55,7 @@
             });
         });
 
-        $("button").click(function( e ) {
+        $("button#delete").click(function( e ) {
             e.preventDefault();
 
             $.ajax({

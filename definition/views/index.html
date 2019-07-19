@@ -1,38 +1,77 @@
-<html>
-   <head>
-      <title>Personal Dictionary</title>
-   </head>
-   <body>
-     <h1>Personal Dictionary</h1>
-     <div class="definition">
-       {% for definition in definitions %}
-         <h1>{{ escape(definition['word']) }}</h1>
-         <h4>{{ escape(definition['pronunciation']) }}</h4>
-         <p>{{ escape(definition['definition']) }}</p>
-         <div><button id="edit" value="{{definition['word']}}">Edit</button><button id="delete" value="{{definition['word']}}">Delete</button></div>
-       {% end %}
-     </div>
-   </body>
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Personal Dictionary</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+
+        <br/>
+        <br/>
+        <div class="wrapper container" style="border: 0.05em solid black;">
+            <h1 class="display-2 text-center" style="padding: 0.5em 0;">Personal Dictionary</h1>
+
+            <button type="button" id="create" class="btn btn-lg btn-primary mx-auto d-block" style="margin-bottom: 2em;">Add a Word</button>
+
+        </div>
+        <br/>
+        <br/>
+
+<div class="wrapper container">
+
+    {% for i in range(len(definitions)) %}
+        {%if i % 3 == 0 %}
+        <div class="row">
+            {% for j in range(3) %}
+                 {%if 3*int(i/3)+j < len(definitions) %}
+                 <div class="definition card text-center col-sm-4 {{ index = 3*int(i/3)+j }}">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ escape(definitions[index]['word']) }}</h1>
+                        <h4 class="card-subtitle mb-2">{{ escape(definitions[index]['pronunciation']) }}</h4>
+                        <p class="card-text">{{ escape(definitions[index]['definition']) }}</p>
+                        {% if show_links %}
+                        <div>
+                            <button type="button" id="edit" class="btn btn-sm btn-outline-primary" value="{{definitions[index]['word']}}">Edit</button>
+                            <button type="button" id="delete" class="btn btn-sm btn-outline-primary" value="{{definitions[index]['word']}}">Delete</button>
+                        </div>
+                        {% end %}
+                    </div>
+                </div>
+        {% end %}
+            {% end %}
+        </div>
+        {% end %}
+    {% end %}
+</div>
+
+    </body>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $("button#edit").click(function( e ) {
-            e.preventDefault();
 
-            var word = $(this).attr("value");
-            window.location.href = "http://localhost:8888/definition?word=" + word;
-        });
+            $("button#create").click(function( e ) {
+                e.preventDefault();
 
-        $("button#delete").click(function( e ) {
-            e.preventDefault();
-var word = $(this).attr("value");
-
-            $.ajax({
-                url: "api/definition?word="+word,
-                type: 'DELETE'
-            }).done(function() {
-                window.location.href = "http://localhost:8888/";
+                window.location.href = "http://localhost:8888/definition/create";
             });
-        });
+
+            $("button#edit").click(function( e ) {
+                e.preventDefault();
+
+                var word = $(this).attr("value");
+                window.location.href = "http://localhost:8888/definition?word=" + word;
+            });
+
+            $("button#delete").click(function( e ) {
+                e.preventDefault();
+                var word = $(this).attr("value");
+
+                $.ajax({
+                    url: "api/definition?word="+word,
+                    type: 'DELETE'
+                }).done(function() {
+                location.reload();
+                });
+            });
     </script>
- </html>
+</html>
