@@ -35,20 +35,72 @@
                 {% if show_links %}
                 <div>
                     <button type="button" id="edit" class="btn btn-sm btn-outline-primary"
+                            data-toggle="modal" data-target="#edit{{definitions[index]['word']}}Modal"
                             value="{{definitions[index]['word']}}">Edit
                     </button>
                     <button type="button" id="delete" class="btn btn-sm btn-outline-primary"
                             value="{{definitions[index]['word']}}">Delete
                     </button>
                 </div>
-                {% end %}
-            </div>
-        </div>
-        {% end %}
-        {% end %}
-    </div>
-    {% end %}
-    {% end %}
+                <div class="modal fade" id="edit{{definitions[index]['word']}}Modal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-left">
+                                <form id="edit{{definition = definitions[index]['word']}}Definition" data="{{definition = definitions[index]}}">
+                                    <div class="form-group">
+                                        <label for="InputWord">Word</label>
+                                        <input name="word" class="form-control" id="InputWord" value="{{definition.get('word', '')}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputPronunciation">Pronunciation</label>
+                                        <input name="pronunciation" class="form-control" id="InputPronunciation"
+                                               value="{{definition.get('pronunciation', '')}}"
+                                               placeholder="Enter the pronunciation">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputDefinition">Definition</label>
+                                        <input name="definition" class="form-control" id="InputDefinition"
+                                               value="{{definition.get('definition', '')}}"
+                                               placeholder="Enter the definition">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputSource">Discovered In</label>
+                                        <input name="source" class="form-control" id="InputSource"
+                                               value="{{definition.get('source', '')}}"
+                                               placeholder="Enter where you found this word">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputExample">Example</label>
+                                        <input name="example" class="form-control" id="InputExample"
+                                               value="{{definition.get('example', '')}}"
+                                               placeholder="Enter an example sentence">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="edit btn btn-primary" value="{{definitions[index]['word']}}">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+</body>
+{% end %}
+</div>
+</div>
+{% end %}
+{% end %}
+</div>
+{% end %}
+{% end %}
 </div>
 
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
@@ -131,12 +183,36 @@
                 });
             });
 
-            $("button#edit").click(function( e ) {
+            $("button.edit").click(function( e ) {
+                var word = $(this).attr("value");
+                console.log(word);
                 e.preventDefault();
 
-                var word = $(this).attr("value");
-                window.location.href = "http://localhost:8888/definition?word=" + word;
+                function jsonFormData() {
+                    var form = "form#edit"+word+"Definition"
+                    console.log(form);
+                    var data = $(form).serializeArray();
+                    var formData = _.object(_.pluck(data, 'name'), _.pluck(data, 'value'));
+                    console.log(formData);
+                    return formData;
+                };
+
+                $.ajax({
+                    url: "http://localhost:8888/api/definition?word="+word,
+                    type: 'PATCH',
+                    contentType: 'application/json',
+                    data: JSON.stringify( jsonFormData() )
+                }).done(function() {
+                    location.reload();
+                });
             });
+
+          //  $("button#edit").click(function( e ) {
+          //      e.preventDefault();
+
+          //      var word = $(this).attr("value");
+          //      window.location.href = "http://localhost:8888/definition?word=" + word;
+          //  });
 
             $("button#delete").click(function( e ) {
                 e.preventDefault();
@@ -149,6 +225,8 @@
                 location.reload();
                 });
             });
+
+
 
 
 
