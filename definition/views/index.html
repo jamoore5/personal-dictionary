@@ -1,58 +1,134 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Personal Dictionary</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-    <body>
+<head>
+    <title>Personal Dictionary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
 
-        <br/>
-        <br/>
-        <div class="wrapper container" style="border: 0.05em solid black;">
-            <h1 class="display-2 text-center" style="padding: 0.5em 0;">Personal Dictionary</h1>
+<br/>
+<br/>
+<div class="wrapper container" style="border: 0.05em solid black;">
+    <h1 class="display-2 text-center" style="padding: 0.5em 0;">Personal Dictionary</h1>
 
-            <button type="button" id="create" class="btn btn-lg btn-primary mx-auto d-block" style="margin-bottom: 2em;">Add a Word</button>
+    <button type="button" class="btn btn-lg btn-primary mx-auto d-block" style="margin-bottom: 2em;"
+            data-toggle="modal" data-target="#createModal">Add a Word
+    </button>
 
-        </div>
-        <br/>
-        <br/>
+</div>
+<br/>
+<br/>
 
 <div class="wrapper container">
 
     {% for i in range(len(definitions)) %}
-        {%if i % 3 == 0 %}
-        <div class="row">
-            {% for j in range(3) %}
-                 {%if 3*int(i/3)+j < len(definitions) %}
-                 <div class="definition card text-center col-sm-4 {{ index = 3*int(i/3)+j }}">
-                    <div class="card-body">
-                        <h1 class="card-title">{{ escape(definitions[index]['word']) }}</h1>
-                        <h4 class="card-subtitle mb-2">{{ escape(definitions[index]['pronunciation']) }}</h4>
-                        <p class="card-text">{{ escape(definitions[index]['definition']) }}</p>
-                        {% if show_links %}
-                        <div>
-                            <button type="button" id="edit" class="btn btn-sm btn-outline-primary" value="{{definitions[index]['word']}}">Edit</button>
-                            <button type="button" id="delete" class="btn btn-sm btn-outline-primary" value="{{definitions[index]['word']}}">Delete</button>
-                        </div>
-                        {% end %}
-                    </div>
+    {%if i % 3 == 0 %}
+    <div class="row">
+        {% for j in range(3) %}
+        {%if 3*int(i/3)+j < len(definitions) %}
+        <div class="definition card text-center col-sm-4 {{ index = 3*int(i/3)+j }}">
+            <div class="card-body">
+                <h1 class="card-title">{{ escape(definitions[index]['word']) }}</h1>
+                <h4 class="card-subtitle mb-2">{{ escape(definitions[index]['pronunciation']) }}</h4>
+                <p class="card-text">{{ escape(definitions[index]['definition']) }}</p>
+                {% if show_links %}
+                <div>
+                    <button type="button" id="edit" class="btn btn-sm btn-outline-primary"
+                            value="{{definitions[index]['word']}}">Edit
+                    </button>
+                    <button type="button" id="delete" class="btn btn-sm btn-outline-primary"
+                            value="{{definitions[index]['word']}}">Delete
+                    </button>
                 </div>
-        {% end %}
-            {% end %}
+                {% end %}
+            </div>
         </div>
         {% end %}
+        {% end %}
+    </div>
+    {% end %}
     {% end %}
 </div>
 
-    </body>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Add a Word</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createDefinition">
+                    <div class="form-group">
+                        <label for="InputWord">Word</label>
+                        <input name="word" class="form-control" id="InputWord" placeholder="Enter word">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPronunciation">Pronunciation</label>
+                        <input name="pronunciation" class="form-control" id="InputPronunciation"
+                               placeholder="Enter the pronunciation">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputDefinition">Definition</label>
+                        <input name="definition" class="form-control" id="InputDefinition"
+                               placeholder="Enter the definition">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputSource">Discovered In</label>
+                        <input name="source" class="form-control" id="InputSource"
+                               placeholder="Enter where you found this word">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputExample">Example</label>
+                        <input name="example" class="form-control" id="InputExample"
+                               placeholder="Enter an example sentence">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="create" type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script>
 
             $("button#create").click(function( e ) {
+                console.log("submitted");
                 e.preventDefault();
 
-                window.location.href = "http://localhost:8888/definition/create";
+                function jsonFormData() {
+                    var data = $("form#createDefinition").serializeArray();
+                    var formData = _.object(_.pluck(data, 'name'), _.pluck(data, 'value'));
+                    console.log(formData);
+                    return formData;
+                };
+
+                $.ajax({
+                    url: "http://localhost:8888/api/definition",
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify( jsonFormData() )
+                }).done(function() {
+                    document.getElementById("createDefinition").reset();
+                    location.reload();
+                });
             });
 
             $("button#edit").click(function( e ) {
@@ -73,5 +149,12 @@
                 location.reload();
                 });
             });
-    </script>
+
+
+
+
+
+
+
+</script>
 </html>

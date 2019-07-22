@@ -3,11 +3,6 @@ import tornado.web
 from api_adapter import ApiAdapter
 
 
-class CreateHandler(tornado.web.RequestHandler):
-    async def get(self):
-        self.render("../views/create.html")
-
-
 class EditHandler(tornado.web.RequestHandler):
     async def get(self):
         word = self.get_argument('word')
