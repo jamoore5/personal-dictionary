@@ -1,4 +1,6 @@
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+
 # Personal Dictionary
 
 A web-based word list to track new words, how they are pronounced, and give them simple definitions.

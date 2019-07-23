@@ -1,0 +1,3 @@
+exclude_patterns:
+- "venv/"
+- "__pycache__/"
