@@ -2,6 +2,7 @@ import tornado.web
 import json
 
 from database_adapter import DatabaseAdapter, DuplicateError
+from definition.definition import Definition, ValidationError
 
 
 class ApiHandler(tornado.web.RequestHandler):
@@ -11,6 +12,19 @@ class ApiHandler(tornado.web.RequestHandler):
 
     def write_response(self, response):
         self.write({"data": response})
+
+    def request_body(self):
+        return json.loads(self.request.body.decode('utf-8'))
+
+    def definition(self):
+        try:
+            definition = Definition(self.request_body())
+        except ValidationError as e:
+            self.set_status(400)
+            self.write({'error': str(e)})
+            return
+
+        return definition.to_dict()
 
     def get(self):
         word = self.get_argument('word', None)
@@ -25,7 +39,10 @@ class ApiHandler(tornado.web.RequestHandler):
             self.write_response(definitions)
 
     def post(self):
-        definition = json.loads(self.request.body.decode('utf-8'))
+        definition = self.definition()
+        if definition is None:
+            return
+
         try:
             self.adapter.insert(definition)
         except DuplicateError:
@@ -35,7 +52,9 @@ class ApiHandler(tornado.web.RequestHandler):
 
     def patch(self):
         word = self.get_argument('word')
-        definition = json.loads(self.request.body.decode('utf-8'))
+        definition = self.definition()
+        if definition is None:
+            return
 
         self.adapter.update(word, definition)
 
@@ -44,7 +63,9 @@ class ApiHandler(tornado.web.RequestHandler):
 
     def put(self):
         word = self.get_argument('word')
-        definition = json.loads(self.request.body.decode('utf-8'))
+        definition = self.definition()
+        if definition is None:
+            return
 
         self.adapter.replace(word, definition)
 

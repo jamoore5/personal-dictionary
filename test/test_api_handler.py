@@ -20,7 +20,6 @@ class MockDatabaseAdapter(object):
                          'definition': 'of, affecting, or belonging to a particular person rather than to anyone else'},
             'dictionary': {'word': 'dictionary', 'pronunciation': 'dic·tion·ar·y',
                            'definition': 'a book or electronic resource that lists the words of a language'}
-
         }
 
         DatabaseAdapter.find_all = self.mock_find_all
@@ -67,7 +66,7 @@ class MockDatabaseAdapter(object):
         return
 
 
-class ApiHandlerTest(AsyncHTTPTestCase):
+class TestApiHandler(AsyncHTTPTestCase):
     def setup_class(ApiHandlerTest):
         def mock_create_unique_word_index(_self):
             return
@@ -119,6 +118,26 @@ class ApiHandlerTest(AsyncHTTPTestCase):
 
         assert response.code == 200
 
+    def test_post_invalid_word(self):
+        body = {'pronunciation': 'foo',
+                'definition': 'term used by programmers as a placeholder for a value that can change'}
+
+        response = self.fetch('/', method='POST', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 400
+        assert json.loads(response.body.decode('utf-8')) == {'error': "Definition missing required field 'word'"}
+
+    def test_post_strips_whitespace_off_word(self):
+        MockDatabaseAdapter('foo',
+                            {'word': 'foo', 'pronunciation': 'foo',
+                             'definition': 'term used by programmers as a placeholder for a value that can change'})
+        body = {'word': '  foo  ', 'pronunciation': 'foo',
+                'definition': 'term used by programmers as a placeholder for a value that can change'}
+
+        response = self.fetch('/', method='POST', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 200
+
     def test_post_duplicate_word(self):
         MockDatabaseAdapter('dictionary',
                             {'word': 'dictionary', 'pronunciation': 'dic·tion·ar·y',
@@ -141,10 +160,48 @@ class ApiHandlerTest(AsyncHTTPTestCase):
 
         assert response.code == 200
 
+    def test_patch_invalid_word(self):
+        body = {'pronunciation': 'dic·tion·ar·y',
+                'definition': 'a book or electronic resource that lists the words of a language'}
+
+        response = self.fetch('/?word=dictionary', method='PATCH', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 400
+        assert json.loads(response.body.decode('utf-8')) == {'error': "Definition missing required field 'word'"}
+
+    def test_patch_strips_whitespace_off_word(self):
+        MockDatabaseAdapter('dictionary')
+
+        body = {'word': '   dictionary  ', 'pronunciation': 'dic·tion·ar·y',
+                'definition': 'a book or electronic resource that lists the words of a language'}
+
+        response = self.fetch('/?word=dictionary', method='PATCH', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 200
+
     def test_put_word(self):
         MockDatabaseAdapter('dictionary')
 
         body = {'word': 'dictionary', 'pronunciation': 'dic·tion·ar·y',
+                'definition': 'a book or electronic resource that lists the words of a language'}
+
+        response = self.fetch('/?word=dictionary', method='PUT', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 200
+
+    def test_put_invalid_word(self):
+        body = {'pronunciation': 'dic·tion·ar·y',
+                'definition': 'a book or electronic resource that lists the words of a language'}
+
+        response = self.fetch('/?word=dictionary', method='PUT', body=json.dumps(body).encode('utf-8'))
+
+        assert response.code == 400
+        assert json.loads(response.body.decode('utf-8')) == {'error': "Definition missing required field 'word'"}
+
+    def test_put_strips_whitespace_off_word(self):
+        MockDatabaseAdapter('dictionary')
+
+        body = {'word': '   dictionary  ', 'pronunciation': 'dic·tion·ar·y',
                 'definition': 'a book or electronic resource that lists the words of a language'}
 
         response = self.fetch('/?word=dictionary', method='PUT', body=json.dumps(body).encode('utf-8'))
