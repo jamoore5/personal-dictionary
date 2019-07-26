@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c3e78074-11ef-4497-9af5-8486003ac4a4" name="Default Changelist" comment="Added tests for the api handler">
-      <change afterPath="$PROJECT_DIR$/test/test_definition.py" afterDir="false" />
+    <list default="true" id="c3e78074-11ef-4497-9af5-8486003ac4a4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definition/handlers/api_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/definition/handlers/api_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/api_handler_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_api_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_definition.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_definition.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,16 +47,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/test_definition.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            <state relative-caret-position="188">
+              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#167#571#0" />
-                <element signature="e#534#773#0" />
-                <element signature="e#860#1090#0" />
-                <element signature="e#1324#1546#0" />
                 <element signature="e#1598#1964#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="15">
+                <caret line="1" column="173" selection-start-line="1" selection-start-column="173" selection-end-line="1" selection-end-column="173" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -141,7 +148,6 @@
         <option value="$PROJECT_DIR$/definition/views/index.html" />
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/.codeclimate.yml" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/test.py" />
         <option value="$PROJECT_DIR$/test/test_sysexit.py" />
         <option value="$PROJECT_DIR$/test/minimal.tavern.yaml" />
@@ -157,6 +163,7 @@
         <option value="$PROJECT_DIR$/definition/handlers/api_handler.py" />
         <option value="$PROJECT_DIR$/test/definition_test.py" />
         <option value="$PROJECT_DIR$/test/api_handler_test.py" />
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/test_definition.py" />
       </list>
     </option>
@@ -180,23 +187,6 @@
             <path>
               <item name="personal-dictionary" type="b2602c69:ProjectViewProjectNode" />
               <item name="personal-dictionary" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="personal-dictionary" type="b2602c69:ProjectViewProjectNode" />
-              <item name="personal-dictionary" type="462c0819:PsiDirectoryNode" />
-              <item name="definition" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="personal-dictionary" type="b2602c69:ProjectViewProjectNode" />
-              <item name="personal-dictionary" type="462c0819:PsiDirectoryNode" />
-              <item name="definition" type="462c0819:PsiDirectoryNode" />
-              <item name="handlers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="personal-dictionary" type="b2602c69:ProjectViewProjectNode" />
-              <item name="personal-dictionary" type="462c0819:PsiDirectoryNode" />
-              <item name="definition" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="personal-dictionary" type="b2602c69:ProjectViewProjectNode" />
@@ -408,7 +398,21 @@
       <option name="project" value="LOCAL" />
       <updated>1564101161775</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added validation when created and updating definitions&#10;&#10;- Also added test coverage for api calls and validation">
+      <created>1564141031540</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1564141031540</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated code climate badge to point to the right project">
+      <created>1564141400464</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1564141400464</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -447,7 +451,7 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27561557" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27561557" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -458,7 +462,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32739726" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.369863" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.369863" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -495,7 +499,9 @@
     <MESSAGE value="Started a README page&#10; &#10; &#10; ...with a screenshot to describe the project and my motivations behind it" />
     <MESSAGE value="Changes to venv directory&#10;&#10;Should I be committing this directory" />
     <MESSAGE value="Added tests for the api handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests for the api handler" />
+    <MESSAGE value="Added validation when created and updating definitions&#10;&#10;- Also added test coverage for api calls and validation" />
+    <MESSAGE value="updated code climate badge to point to the right project" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated code climate badge to point to the right project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -633,16 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="24">
-            <caret line="2" selection-start-line="2" selection-end-line="2" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -805,16 +801,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="15">
+            <caret line="1" column="173" selection-start-line="1" selection-start-column="173" selection-end-line="1" selection-end-column="173" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_definition.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state relative-caret-position="188">
+          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#167#571#0" />
-            <element signature="e#534#773#0" />
-            <element signature="e#860#1090#0" />
-            <element signature="e#1324#1546#0" />
             <element signature="e#1598#1964#0" />
           </folding>
         </state>

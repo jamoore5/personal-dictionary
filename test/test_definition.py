@@ -1,4 +1,4 @@
-from pytest import raises
+import pytest
 from definition.definition import Definition, ValidationError
 
 
@@ -13,29 +13,19 @@ class TestInitialize:
         assert definition.pronunciation == 'foo'
         assert definition.definition == 'term used by programmers as a placeholder for a value that can change'
 
-    def test_word_required(self):
-        definition = {'pronunciation': 'foo',
-                      'definition': 'term used by programmers as a placeholder for a value that can change'}
-        with raises(ValidationError) as error:
+    @pytest.mark.parametrize("definition,missing_field", [
+        ({'pronunciation': 'p', 'definition': 'd'}, 'word'),
+        ({'word': 'w', 'definition': 'd'}, 'pronunciation'),
+        ({'word': 'w', 'pronunciation': 'p'}, 'definition'),
+        ({'word': '', 'pronunciation': 'p', 'definition': 'd'}, 'word'),
+        ({'word': 'w', 'pronunciation': '', 'definition': 'd'}, 'pronunciation'),
+        ({'word': 'w', 'pronunciation': 'p', 'definition': ''}, 'definition')
+    ])
+    def test_missing_required_field(self, definition, missing_field):
+        with pytest.raises(ValidationError) as error:
             Definition(definition)
 
-        assert "Definition missing required field 'word'" in str(error)
-
-    def test_pronunciation_required(self):
-        definition = {'word': 'foo',
-                      'definition': 'term used by programmers as a placeholder for a value that can change'}
-        with raises(ValidationError) as error:
-            Definition(definition)
-
-        assert "Definition missing required field 'pronunciation'" in str(error)
-
-    def test_definition_required(self):
-        definition = {'word': 'foo', 'pronunciation': 'foo'}
-
-        with raises(ValidationError) as error:
-            Definition(definition)
-
-        assert "Definition missing required field 'definition'" in str(error)
+        assert f"Definition missing required field '{missing_field}'" in str(error)
 
 
 class TestToDict:
